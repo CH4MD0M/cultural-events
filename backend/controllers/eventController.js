@@ -22,4 +22,19 @@ const getEvents = async (req, res) => {
   }
 };
 
-module.exports = { getEvents };
+const getUniqueGenres = async (req, res) => {
+  try {
+    const genres = await Event.distinct("GENRE");
+    console.log(`Found ${genres.length} unique genres`);
+    console.log(genres);
+    res.json({
+      genres,
+      totalGenres: genres.length,
+    });
+  } catch (error) {
+    console.error("Error fetching unique genres:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getEvents, getUniqueGenres };
