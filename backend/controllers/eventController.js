@@ -60,6 +60,22 @@ const getEvents = async (req, res) => {
   }
 };
 
+const getEventById = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      return res.status(404).json({ message: "이벤트를 찾을 수 없습니다." });
+    }
+
+    res.json(event);
+  } catch (error) {
+    console.error("Error fetching event:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const getUniqueGenres = async (req, res) => {
   try {
     const genres = await Event.distinct("GENRE");
@@ -75,4 +91,42 @@ const getUniqueGenres = async (req, res) => {
   }
 };
 
-module.exports = { getEvents, getUniqueGenres };
+const searchEvents = async (req, res) => {
+  try {
+    const { query, page = 1, limit = 10, genre } = req.query;
+    const skip = (page - 1) * limit;
+
+    if (!query) {
+      return res.status(400).json({ message: "검색어를 입력해주세요." });
+    }
+
+    const searchRegex = new RegExp(query, "i");
+
+    let searchQuery = {
+      $or: [{ TITLE: searchRegex }, { DESCRIPTION: searchRegex }],
+    };
+
+    if (genre) {
+      searchQuery.GENRE = genre;
+    }
+
+    const events = await Event.find(searchQuery)
+      .skip(skip)
+      .limit(parseInt(limit))
+      .sort({ ISSUED_DATE: -1 });
+
+    const total = await Event.countDocuments(searchQuery);
+
+    res.json({
+      events,
+      currentPage: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+      totalEvents: total,
+    });
+  } catch (error) {
+    console.error("Error searching events:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getEvents, getEventById, getUniqueGenres, searchEvents };
