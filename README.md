@@ -2,7 +2,7 @@
 
 # getEvents
 
-## 엔드포인트
+### 엔드포인트
 
 ```
 GET /events
@@ -16,6 +16,8 @@ GET /events
 | limit    | Integer | 선택 | 한 페이지당 반환할 이벤트 수                                  | 10     |
 | genre    | String  | 선택 | 필터링할 이벤트 장르                                          | -      |
 | status   | String  | 선택 | 필터링할 이벤트 상태 ("upcoming", "ongoing", "closed", "all") | -      |
+
+<br/>
 
 ## 응답
 
@@ -72,6 +74,8 @@ GET /events
 }
 ```
 
+<br/>
+
 ## 예시
 
 ### 요청
@@ -100,11 +104,11 @@ GET /events?page=1&limit=5&genre=음악&status=ongoing
 }
 ```
 
-<br/>
+<br/><br/>
 
 # getEventById
 
-## 엔드포인트
+### 엔드포인트
 
 ```
 GET /events/:id
@@ -115,6 +119,8 @@ GET /events/:id
 | 파라미터 | 타입   | 필수 | 설명                    |
 | -------- | ------ | ---- | ----------------------- |
 | id       | String | 필수 | 조회할 이벤트의 고유 ID |
+
+<br/>
 
 ## 응답
 
@@ -167,6 +173,8 @@ GET /events/:id
 }
 ```
 
+<br/>
+
 ## 예시
 
 ### 요청
@@ -190,15 +198,17 @@ GET /api/events/60d5ecb6f85cf21234c88b01
 }
 ```
 
-<br/>
+<br/><br/>
 
 # getUniqueGenres
 
-## 엔드포인트
+### 엔드포인트
 
 ```
 GET /events/genres
 ```
+
+<br/>
 
 ## 응답
 
@@ -223,6 +233,8 @@ GET /events/genres
   "message": "String"
 }
 ```
+
+<br/>
 
 ## 예시
 
@@ -260,11 +272,11 @@ GET /api/events/genres
 }
 ```
 
-<br/>
+<br/><br/>
 
-# searchEvents API 문서
+# searchEvents
 
-## 엔드포인트
+### 엔드포인트
 
 ```
 GET /events/search
@@ -278,6 +290,8 @@ GET /events/search
 | page     | Integer | 선택 | 조회할 페이지 번호           | 1      |
 | limit    | Integer | 선택 | 한 페이지당 반환할 이벤트 수 | 10     |
 | genre    | String  | 선택 | 필터링할 이벤트 장르         | -      |
+
+<br/>
 
 ## 응답
 
@@ -325,6 +339,8 @@ GET /events/search
   "message": "String"
 }
 ```
+
+<br/>
 
 ## 예시
 
